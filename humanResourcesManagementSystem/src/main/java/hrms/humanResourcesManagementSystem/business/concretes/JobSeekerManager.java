@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hrms.humanResourcesManagementSystem.business.abstracts.JobSeekerService;
-import hrms.humanResourcesManagementSystem.core.abstracts.ValidationService;
-import hrms.humanResourcesManagementSystem.core.concretes.EmailCheckManager;
+import hrms.humanResourcesManagementSystem.core.constants.EmailRegexCheckTool;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.ErrorResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
+import hrms.humanResourcesManagementSystem.core.validators.abstracts.EmailValidationService;
+import hrms.humanResourcesManagementSystem.core.validators.abstracts.UserValidationService;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.JobSeekerDao;
 import hrms.humanResourcesManagementSystem.entities.concretes.JobSeeker;
 
@@ -20,23 +21,23 @@ import hrms.humanResourcesManagementSystem.entities.concretes.JobSeeker;
 public class JobSeekerManager implements JobSeekerService {
 
 	private JobSeekerDao jobSeekerDao;
-	private ValidationService<JobSeeker> validationService;
-	private EmailCheckManager emailCheckManager ;
+	private UserValidationService<JobSeeker> uservalidationService;
+	private EmailValidationService emailValidationService;
 	
 	@Autowired
-	public JobSeekerManager(JobSeekerDao jobSeekerDao,ValidationService<JobSeeker> validationService,EmailCheckManager emailValidationService) {
+	public JobSeekerManager(JobSeekerDao jobSeekerDao,UserValidationService<JobSeeker> uservalidationService,EmailValidationService emailValidationService) {
 		super();
 		this.jobSeekerDao = jobSeekerDao;
-		this.validationService = validationService;
-		this.emailCheckManager = emailValidationService;
+		this.uservalidationService = uservalidationService;
+
+		this.emailValidationService=emailValidationService;
 		
 	}
 
 	@Override
 	public DataResult<List<JobSeeker>> getAll() {
 		
-		return new SuccessDataResult<List<JobSeeker>>
-		(this.jobSeekerDao.findAll(),"JobSeekers Listed");
+		return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.findAll(),"JobSeekers Listed");
 	}
 
 	@Override
@@ -45,22 +46,23 @@ public class JobSeekerManager implements JobSeekerService {
 	
 		
 		
-		if(validationService.checkIfRealPerson(jobSeeker) 	
+		if(uservalidationService.checkIfRealPerson(jobSeeker) 	
 				&& !jobSeekerDao.existsByMail(jobSeeker.getMail()) )
 					
 			 {
 			
-			if (jobSeekerDao.existsByNationalityIdentity(jobSeeker.getNationalityIdentity()) ) {
+			if (jobSeekerDao.existsByNationalityIdentity(jobSeeker.getNationalityIdentity()) 
+					&& EmailRegexCheckTool.checkEmail(jobSeeker.getMail())) {
 				return new ErrorResult("this user already exists");
 			}			
 			else {
-				if(emailCheckManager.sendEmail(jobSeeker.getMail())) {
+				if(emailValidationService.emailValidate(jobSeeker.getMail())) {
 					
 					this.jobSeekerDao.save(jobSeeker);
-					return new SuccessResult("JobSeeker is Added");
+					return new SuccessResult("JobSeeker Added");
 					
 				}else {
-				return new ErrorResult("Email verification is not successful");
+				return new ErrorResult("Email verification not successful");
 			}
 			
 	    } 

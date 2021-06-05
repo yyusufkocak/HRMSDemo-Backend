@@ -35,10 +35,10 @@ public class JobPositionManager implements JobPositionService {
 		Result result = null;
 
 		if (jobPositionDao.existsByPosition(jobPosition.getPosition())) {
-			result = new ErrorResult("Job position is already defined");
+			result = new ErrorResult("Job position already defined");
 		} else {
 			this.jobPositionDao.save(jobPosition);
-			result = new SuccessResult("Job position is added");
+			result = new SuccessResult("Job position added");
 		}
 
 		return result;

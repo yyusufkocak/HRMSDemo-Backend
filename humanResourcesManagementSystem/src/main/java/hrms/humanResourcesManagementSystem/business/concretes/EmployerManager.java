@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hrms.humanResourcesManagementSystem.business.abstracts.EmployerService;
-import hrms.humanResourcesManagementSystem.core.concretes.EmailCheckManager;
+import hrms.humanResourcesManagementSystem.core.constants.EmailRegexCheckTool;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.ErrorResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
+import hrms.humanResourcesManagementSystem.core.validators.abstracts.EmailValidationService;
+import hrms.humanResourcesManagementSystem.core.validators.abstracts.SystemValidationService;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.EmployerDao;
 import hrms.humanResourcesManagementSystem.entities.concretes.Employer;
 
@@ -19,13 +21,15 @@ import hrms.humanResourcesManagementSystem.entities.concretes.Employer;
 public class EmployerManager implements EmployerService {
 
 	private EmployerDao employerDao;
-	private EmailCheckManager emailCheckManager;
+	private SystemValidationService<Employer> systemValidationService;
+	private EmailValidationService emailValidationService;
 
 	@Autowired
-	public EmployerManager(EmployerDao employerDao, EmailCheckManager emailCheckManager) {
+	public EmployerManager(EmployerDao employerDao,SystemValidationService<Employer> systemValidationService,EmailValidationService emailValidationService) {
 		super();
 		this.employerDao = employerDao;
-		this.emailCheckManager = emailCheckManager;
+		this.systemValidationService = systemValidationService;
+		this.emailValidationService = emailValidationService;
 	}
 
 	@Override
@@ -36,17 +40,21 @@ public class EmployerManager implements EmployerService {
 
 	@Override
 	public Result add(Employer employer) {
-		if (employer.getWebAddress().contains(
-				employer.getMail().substring(employer.getMail().indexOf("@") + 1, employer.getMail().indexOf(".")))) {
+		
+		String checkdomain=employer.getWebAddress().split("www.")[1];
+				
+		
+		if (checkdomain.equals(employer.getMail().split("@")[1])
+			&&systemValidationService.systemValidate(employer)) {
 
-			if (employerDao.existsByMail(employer.getMail())) {
+			if( EmailRegexCheckTool.checkEmail(employer.getMail()) && employerDao.existsByMail(employer.getMail())) {
 
 				return new ErrorResult("This mail already exists.");
 			}
 
 			else {
 
-				if (emailCheckManager.sendEmail(employer.getMail())) {
+				if (emailValidationService.emailValidate(employer.getMail())) {
 					this.employerDao.save(employer);
 					return new SuccessResult("Employer is Added");
 				} else {
@@ -55,7 +63,7 @@ public class EmployerManager implements EmployerService {
 			}
 
 		}
-		return new ErrorResult("Employer is Not Added");
+		return new ErrorResult("Employer Not Added");
 
 	}
 
