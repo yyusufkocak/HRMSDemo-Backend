@@ -1,5 +1,9 @@
 package hrms.humanResourcesManagementSystem;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,10 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class HumanResourcesManagementSystemApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		SpringApplication.run(HumanResourcesManagementSystemApplication.class, args);
-		
-		
+	
 	}
 	@Bean
     public Docket api() { 

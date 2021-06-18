@@ -4,15 +4,13 @@ import java.util.List;
 
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
-import hrms.humanResourcesManagementSystem.entities.concretes.JobSeeker;
+import hrms.humanResourcesManagementSystem.entities.concretes.CoverLetter;
 
+public interface CoverLetterService {
 
-public interface JobSeekerService {
 	
-	DataResult<List<JobSeeker>> getAll();
-	
-	DataResult<JobSeeker> getById(int jobSeekerId);
-	
-	Result add (JobSeeker jobSeeker) ;
+	DataResult<List<CoverLetter>> getAll();
+	Result add(CoverLetter coverLetter);
+	Result delete(CoverLetter coverLetter);
 	
 }

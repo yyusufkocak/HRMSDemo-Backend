@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hrms.humanResourcesManagementSystem.business.abstracts.EmployerService;
-import hrms.humanResourcesManagementSystem.core.constants.EmailRegexCheckTool;
+import hrms.humanResourcesManagementSystem.core.tools.concretes.EmailRegexCheckTool;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.ErrorResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;

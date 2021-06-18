@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hrms.humanResourcesManagementSystem.business.abstracts.JobSeekerService;
-import hrms.humanResourcesManagementSystem.core.constants.EmailRegexCheckTool;
+import hrms.humanResourcesManagementSystem.core.tools.concretes.EmailRegexCheckTool;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.ErrorResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
@@ -69,5 +69,12 @@ public class JobSeekerManager implements JobSeekerService {
 		
 		}
 		return new ErrorResult("JobSeekers Not Added");
+	}
+
+	@Override
+	public DataResult<JobSeeker> getById(int jobSeekerId) {
+		
+	
+		 return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getById(jobSeekerId));
 	}
 }

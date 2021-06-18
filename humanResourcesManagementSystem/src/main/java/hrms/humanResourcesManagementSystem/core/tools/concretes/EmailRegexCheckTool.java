@@ -1,4 +1,4 @@
-package hrms.humanResourcesManagementSystem.core.constants;
+package hrms.humanResourcesManagementSystem.core.tools.concretes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

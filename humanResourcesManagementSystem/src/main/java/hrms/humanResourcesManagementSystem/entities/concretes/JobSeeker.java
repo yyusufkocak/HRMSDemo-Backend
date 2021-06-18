@@ -1,10 +1,13 @@
 package hrms.humanResourcesManagementSystem.entities.concretes;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +37,30 @@ public class JobSeeker extends User {
 	@NotNull
 	@Column(name = "birth_of_year")
 	private String birthOfYear;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")	
+	private List<CoverLetter> coverLetters; 
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")	
+	private List<JobExperience> jobExperiences;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")	
+	private List<JobSeekerEducation>  jobSeekerEducation;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")	
+	private List<JobSeekerLanguage>  jobSeekerLanguage;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")	
+	private List<JobSeekerSkill>  jobSeekerSkill;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")	
+	private List<JobSeekerImage>  jobSeekerImage;
 	
 
 
