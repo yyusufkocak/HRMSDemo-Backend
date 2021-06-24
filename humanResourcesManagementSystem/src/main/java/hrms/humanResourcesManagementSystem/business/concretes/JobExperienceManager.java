@@ -12,7 +12,9 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.JobExperienceDao;
+import hrms.humanResourcesManagementSystem.entities.concretes.CoverLetter;
 import hrms.humanResourcesManagementSystem.entities.concretes.JobExperience;
+import hrms.humanResourcesManagementSystem.entities.concretes.Resume;
 
 @Service
 public class JobExperienceManager implements JobExperienceService {
@@ -48,5 +50,9 @@ public class JobExperienceManager implements JobExperienceService {
 	public DataResult<List<JobExperience>> getAllByJobSeekerIdOrderByEndingDateDesc(int jobSeekerId) {
 		return new SuccessDataResult<List<JobExperience>>(jobExperienceDao.getAllByJobSeeker_IdOrderByEndingDateDesc(jobSeekerId));
 	}
+
+	
+
+
 
 }

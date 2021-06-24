@@ -41,6 +41,7 @@ public class JobPositionManager implements JobPositionService {
 			result = new SuccessResult("Job position added");
 		}
 
+	
 		return result;
 	}
 

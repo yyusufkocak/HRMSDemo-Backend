@@ -36,6 +36,12 @@ private UserService userService;
 		return this.userService.getAll();
 	}
 	
+	@GetMapping("/getById")
+	public DataResult<User> getById(int userId){
+		
+		return this.userService.getById(userId);
+	}
+	
 	@PostMapping("/add")
 	public Result add(@RequestBody JobSeeker jobSeeker){
 		return userService.add(jobSeeker);

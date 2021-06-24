@@ -11,6 +11,7 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.JobSeekerLanguageDao;
+import hrms.humanResourcesManagementSystem.entities.concretes.CoverLetter;
 import hrms.humanResourcesManagementSystem.entities.concretes.JobSeekerLanguage;
 
 @Service
@@ -41,5 +42,10 @@ public class JobSeekerLanguageManager implements JobSeekerLanguageService {
 		jobSeekerLanguageDao.delete(jobSeekerLanguage);
 		return new SuccessResult("JobSeekerLanguage deleted");
 		
+	}
+
+	@Override
+	public DataResult<List<JobSeekerLanguage>> getAllByJobSeekerId(int jobseekerId) {
+		return new SuccessDataResult<List<JobSeekerLanguage>>(this.jobSeekerLanguageDao.getAllByJobSeeker_Id(jobseekerId));
 	}
 }

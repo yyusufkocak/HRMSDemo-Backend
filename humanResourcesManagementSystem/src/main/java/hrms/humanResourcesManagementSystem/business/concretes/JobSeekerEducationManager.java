@@ -11,6 +11,7 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.JobSeekerEducationDao;
+import hrms.humanResourcesManagementSystem.entities.concretes.CoverLetter;
 import hrms.humanResourcesManagementSystem.entities.concretes.JobSeekerEducation;
 
 @Service
@@ -49,4 +50,6 @@ public class JobSeekerEducationManager implements JobSeekerEducationService {
 		return new SuccessDataResult<List<JobSeekerEducation>>(JobSeekerEducationDao.getAllByJobSeeker_IdOrderByEndingDateDesc(jobSeekerId));
 	
 	}
+
+	
 }

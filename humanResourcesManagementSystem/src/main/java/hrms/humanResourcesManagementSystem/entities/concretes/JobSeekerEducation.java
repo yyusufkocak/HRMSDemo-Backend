@@ -12,10 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,6 +48,10 @@ public class JobSeekerEducation {
 	
 	@Column(name = "ending_date")
 	private LocalDate endingDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "resume_id")
+	private Resume resume;
 
 	public String getEndingDate() {
 

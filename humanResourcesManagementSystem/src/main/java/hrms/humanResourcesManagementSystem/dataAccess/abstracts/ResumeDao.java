@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import hrms.humanResourcesManagementSystem.entities.concretes.JobSeekerImage;
+import hrms.humanResourcesManagementSystem.entities.concretes.Resume;
 
 @Repository
-public interface JobSeekerImageDao extends JpaRepository<JobSeekerImage, Integer> {
-	// List<JobSeekerImage> getByJobSeeker_Id(int jobSeekerid);
+public interface ResumeDao extends JpaRepository<Resume,Integer>{
+	
+
+	
+	Resume getByJobSeeker_Id(int jobSeekerId);
+	
 }

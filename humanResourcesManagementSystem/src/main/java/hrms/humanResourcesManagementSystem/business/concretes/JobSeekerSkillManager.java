@@ -11,6 +11,7 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.JobSeekerSkillDao;
+import hrms.humanResourcesManagementSystem.entities.concretes.CoverLetter;
 import hrms.humanResourcesManagementSystem.entities.concretes.JobSeekerSkill;
 
 @Service
@@ -41,5 +42,10 @@ public class JobSeekerSkillManager implements JobSeekerSkillService{
 		jobSeekerSkillDao.delete(jobSeekerSkill);
 		return new SuccessResult("JobSeeker Skill deleted");
 		
+	}
+
+	@Override
+	public DataResult<List<JobSeekerSkill>> getAllByJobSeekerId(int jobseekerId) {
+		return new SuccessDataResult<List<JobSeekerSkill>>(this.jobSeekerSkillDao.getAllByJobSeeker_Id(jobseekerId));
 	}
 }

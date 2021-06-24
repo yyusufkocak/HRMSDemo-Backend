@@ -13,9 +13,12 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.wsdl.Message;
 
+import org.hibernate.annotations.Proxy;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,6 +40,9 @@ public class JobSeekerLanguage {
 	@JoinColumn(name = "language_id")
 	private Language language;
 
+	@ManyToOne
+	@JoinColumn(name = "resume_id")
+	private Resume resume;
 	
 //	@Min(value = 1) bende bu ve bununla aynı işi yapan anotasyonlar çalışmadığı için aşağıda setLanguageLevel kısmında if-else ile halletmeye çalıştım 
 //	@Max(value = 5)

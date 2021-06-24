@@ -2,18 +2,19 @@ package hrms.humanResourcesManagementSystem.api.controllers;
 
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import hrms.humanResourcesManagementSystem.business.abstracts.SkillService;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.entities.concretes.Skill;
+
 
 @RestController
 @RequestMapping("/api/skills")
@@ -43,4 +44,11 @@ private SkillService skillService;
 	public Result delete(@RequestBody Skill skill) {
 		return this.skillService.delete(skill);
 	  }
+	
+	
+	@GetMapping("/getById")
+	public DataResult<Skill> getById(int id){
+		
+		return this.skillService.getById(id);
+	}
 }

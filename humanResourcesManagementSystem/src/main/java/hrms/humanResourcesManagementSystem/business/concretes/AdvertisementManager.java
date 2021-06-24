@@ -13,6 +13,7 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataRes
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.AdvertisementDao;
 import hrms.humanResourcesManagementSystem.entities.concretes.Advertisement;
+import hrms.humanResourcesManagementSystem.entities.concretes.User;
 
 @Service
 public class AdvertisementManager implements AdvertisementService {
@@ -43,6 +44,7 @@ public class AdvertisementManager implements AdvertisementService {
 			return new SuccessResult("Advertisement Deleted");
 		} catch (Exception e) {
 			return new ErrorResult("Advertisement Not Deleted");
+			
 		}
 	}
 
@@ -61,6 +63,11 @@ public class AdvertisementManager implements AdvertisementService {
 	@Override
 	public DataResult<List<Advertisement>> getByIsActiveTrueAndEmployer_Id(int employerId) {
 		return new SuccessDataResult<List<Advertisement>>(this.advertisementDao.getByIsActiveTrueAndEmployer_Id(employerId));
+	}
+
+	@Override
+	public DataResult<Advertisement> getById(int id) {
+		return new SuccessDataResult<Advertisement>(this.advertisementDao.getById(id));
 	}
 
 }

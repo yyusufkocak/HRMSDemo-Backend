@@ -15,6 +15,7 @@ import hrms.humanResourcesManagementSystem.business.abstracts.AdvertisementServi
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.entities.concretes.Advertisement;
+import hrms.humanResourcesManagementSystem.entities.concretes.User;
 
 @RestController
 @RequestMapping("/api/advertisements")
@@ -49,6 +50,12 @@ public class AdvertisementsController {
 	@GetMapping("/getByIsActiveTrueAndEmployer_Id")
 	public DataResult<List<Advertisement>> getByIsActiveTrueAndEmployer_Id(int employerId) {
 		return this.advertisementService.getByIsActiveTrueAndEmployer_Id(employerId);
+	}
+	
+	@GetMapping("/getById")
+	public DataResult<Advertisement> getById(int id){
+		
+		return this.advertisementService.getById(id);
 	}
 
 }

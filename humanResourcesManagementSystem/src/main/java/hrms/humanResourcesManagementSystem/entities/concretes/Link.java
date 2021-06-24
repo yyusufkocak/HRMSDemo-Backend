@@ -1,6 +1,7 @@
 package hrms.humanResourcesManagementSystem.entities.concretes;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +39,8 @@ public class Link {
 	@Column(name = "linkedin_url")
 	private String linkedinUrl;
 	
-	
+	@ManyToOne
+	@JoinColumn(name = "resume_id")
+	private Resume resume;
 	
 }

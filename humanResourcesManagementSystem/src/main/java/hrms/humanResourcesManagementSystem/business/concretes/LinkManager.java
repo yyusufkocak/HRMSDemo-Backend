@@ -11,6 +11,7 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.LinkDao;
+import hrms.humanResourcesManagementSystem.entities.concretes.CoverLetter;
 import hrms.humanResourcesManagementSystem.entities.concretes.Link;
 
 @Service
@@ -41,6 +42,11 @@ public class LinkManager implements LinkService {
 		linkDao.delete(link);
 		return new SuccessResult("Link deleted");
 		
+	}
+
+	@Override
+	public DataResult<List<Link>> getAllByJobSeekerId(int jobseekerId) {
+		return new SuccessDataResult<List<Link>>(this.linkDao.getAllByJobSeeker_Id(jobseekerId));
 	}
 	
 }

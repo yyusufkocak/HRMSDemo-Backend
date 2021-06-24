@@ -4,6 +4,10 @@ package hrms.humanResourcesManagementSystem.core.utilities.image;
 
 import java.io.File;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
+
 
 
 
@@ -11,5 +15,5 @@ import java.io.File;
 
 
 public interface ImageUploadCloudinaryService {
-	String upload(File file);
+	DataResult<?> upload(MultipartFile multipartFile);
 }

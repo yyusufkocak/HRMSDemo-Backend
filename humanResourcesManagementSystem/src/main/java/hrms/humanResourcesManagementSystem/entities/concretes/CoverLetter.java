@@ -12,10 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @Entity
@@ -36,5 +38,9 @@ public class CoverLetter {
 	@ManyToOne
 	@JoinColumn(name = "job_seeker_id")
 	private JobSeeker jobSeeker;
+	
+	@ManyToOne
+	@JoinColumn(name = "resume_id")
+	private Resume resume;
 
 }

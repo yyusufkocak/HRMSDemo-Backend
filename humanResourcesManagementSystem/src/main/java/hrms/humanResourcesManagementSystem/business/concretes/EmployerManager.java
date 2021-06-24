@@ -13,22 +13,21 @@ import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessResult;
 import hrms.humanResourcesManagementSystem.core.validators.abstracts.EmailValidationService;
-import hrms.humanResourcesManagementSystem.core.validators.abstracts.SystemValidationService;
 import hrms.humanResourcesManagementSystem.dataAccess.abstracts.EmployerDao;
 import hrms.humanResourcesManagementSystem.entities.concretes.Employer;
+
 
 @Service
 public class EmployerManager implements EmployerService {
 
 	private EmployerDao employerDao;
-	private SystemValidationService<Employer> systemValidationService;
+
 	private EmailValidationService emailValidationService;
 
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,SystemValidationService<Employer> systemValidationService,EmailValidationService emailValidationService) {
+	public EmployerManager(EmployerDao employerDao,EmailValidationService emailValidationService) {
 		super();
 		this.employerDao = employerDao;
-		this.systemValidationService = systemValidationService;
 		this.emailValidationService = emailValidationService;
 	}
 
@@ -44,8 +43,7 @@ public class EmployerManager implements EmployerService {
 		String checkdomain=employer.getWebAddress().split("www.")[1];
 				
 		
-		if (checkdomain.equals(employer.getMail().split("@")[1])
-			&&systemValidationService.systemValidate(employer)) {
+		if (checkdomain.equals(employer.getMail().split("@")[1])) {
 
 			if( EmailRegexCheckTool.checkEmail(employer.getMail()) && employerDao.existsByMail(employer.getMail())) {
 
@@ -55,8 +53,10 @@ public class EmployerManager implements EmployerService {
 			else {
 
 				if (emailValidationService.emailValidate(employer.getMail())) {
+				
 					this.employerDao.save(employer);
-					return new SuccessResult("Employer is Added");
+					return new SuccessResult("Employer added");
+					
 				} else {
 					return new ErrorResult("Email verification is not successful");
 				}
@@ -65,6 +65,17 @@ public class EmployerManager implements EmployerService {
 		}
 		return new ErrorResult("Employer Not Added");
 
+	}
+
+	@Override
+	public DataResult<Employer> getById(int id) {
+		return new SuccessDataResult<Employer>(this.employerDao.getById(id));
+	}
+
+	@Override
+	public Result update(Employer employer) {
+		this.employerDao.save(employer);
+		return new SuccessResult("Employer updated");
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import hrms.humanResourcesManagementSystem.business.abstracts.JobSeekerImageService;
 import hrms.humanResourcesManagementSystem.business.abstracts.JobSeekerService;
+import hrms.humanResourcesManagementSystem.business.abstracts.UserService;
 import hrms.humanResourcesManagementSystem.core.utilities.image.ImageUploadCloudinaryService;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.ErrorResult;
@@ -26,35 +27,31 @@ public class JobSeekerImageManager implements JobSeekerImageService {
 
 	private JobSeekerImageDao jobSeekerImageDao;
 	private ImageUploadCloudinaryService imageUploadCloudinaryService;
-	private JobSeekerService jobSeekerService;
+	private UserService userService;
 	
 	@Autowired
-	public JobSeekerImageManager(JobSeekerImageDao jobSeekerImageDao,ImageUploadCloudinaryService imageUploadCloudinaryService,JobSeekerService jobSeekerService) {
+	public JobSeekerImageManager(JobSeekerImageDao jobSeekerImageDao,ImageUploadCloudinaryService imageUploadCloudinaryService,UserService userService) {
 		this.jobSeekerImageDao=jobSeekerImageDao;		
 		this.imageUploadCloudinaryService=imageUploadCloudinaryService;
-		this.jobSeekerService=jobSeekerService;
+		this.userService=userService;
 	}
 	
 	 @Override
-	 public Result add(int jobSeekerId,String path) {
+	 public Result upload(int userId, MultipartFile multipartFile) {
 		 
 		  
-	        File file= (new File(path));
 
+			Map<?, ?> uploadImage = (Map<?, ?>) imageUploadCloudinaryService.upload(multipartFile).getData();
 
-	        String url=imageUploadCloudinaryService.upload(file);
-
-	       
-	        JobSeekerImage jobSeekerImage=new JobSeekerImage();
-	        jobSeekerImage.setImageUrl(url);
-	        jobSeekerImage.setJobSeeker(jobSeekerService.getById(jobSeekerId).getData());
-
-	       
-
-	        jobSeekerImageDao.save(jobSeekerImage);
-	        return new SuccessResult("Image Added");
+			JobSeekerImage jobSeekerImage = new JobSeekerImage();
+			jobSeekerImage.setUser(userService.getById(userId).getData());
+			jobSeekerImage.setImageUrl(uploadImage.get("url").toString());
 			
+			jobSeekerImageDao.save(jobSeekerImage);
+			return new SuccessResult("Image added");
 	}
+	 
+	 
 
 
 

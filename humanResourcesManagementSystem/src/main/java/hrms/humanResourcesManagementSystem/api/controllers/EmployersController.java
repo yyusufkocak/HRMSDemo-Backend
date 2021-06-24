@@ -13,6 +13,7 @@ import hrms.humanResourcesManagementSystem.business.abstracts.EmployerService;
 import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
 import hrms.humanResourcesManagementSystem.core.utilities.results.Result;
 import hrms.humanResourcesManagementSystem.entities.concretes.Employer;
+import hrms.humanResourcesManagementSystem.entities.concretes.JobSeeker;
 
 @RestController
 @RequestMapping("/api/employers")
@@ -34,5 +35,10 @@ public class EmployersController {
 	@PostMapping("/add")
 	public Result add(@RequestBody Employer employer) {
 		return employerService.add(employer);
+	}
+	
+	@GetMapping("/getById")
+	public DataResult<Employer> getById(int id){
+		return this.employerService.getById(id);
 	}
 }

@@ -5,7 +5,11 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
@@ -14,11 +18,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+@Proxy(lazy = false)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 @Table(name = "job_seekers")
 public class JobSeeker extends User {
 
@@ -48,20 +53,21 @@ public class JobSeeker extends User {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "jobSeeker")	
-	private List<JobSeekerEducation>  jobSeekerEducation;
+	private List<JobSeekerEducation>  jobSeekerEducations;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "jobSeeker")	
-	private List<JobSeekerLanguage>  jobSeekerLanguage;
+	private List<JobSeekerLanguage>  jobSeekerLanguages;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "jobSeeker")	
-	private List<JobSeekerSkill>  jobSeekerSkill;
+	private List<JobSeekerSkill>  jobSeekerSkills;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "jobSeeker")	
-	private List<JobSeekerImage>  jobSeekerImage;
+
 	
+	@JsonIgnore
+	@OneToOne (mappedBy = "jobSeeker")	
+	private Resume resume;
 
 
 }

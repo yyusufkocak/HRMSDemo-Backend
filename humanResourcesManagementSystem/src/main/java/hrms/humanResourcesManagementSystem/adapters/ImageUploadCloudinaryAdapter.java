@@ -2,6 +2,7 @@ package hrms.humanResourcesManagementSystem.adapters;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -12,6 +13,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
 import hrms.humanResourcesManagementSystem.core.utilities.image.ImageUploadCloudinaryService;
+import hrms.humanResourcesManagementSystem.core.utilities.results.DataResult;
+import hrms.humanResourcesManagementSystem.core.utilities.results.ErrorDataResult;
+import hrms.humanResourcesManagementSystem.core.utilities.results.SuccessDataResult;
 
 
 
@@ -29,12 +33,14 @@ public class ImageUploadCloudinaryAdapter implements ImageUploadCloudinaryServic
 	    }
 
 	    @Override
-	    public String upload(File file) {
-	        try {
-	            Map uploadResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
-	            return  (uploadResult.get("url").toString());
-	        } catch (Exception e) {
-	            throw new RuntimeException(e);
-	        }
-	    }
+		public DataResult<?> upload(MultipartFile multipartFile) {
+
+			try {
+				Map<?, ?> uploadResult = cloudinary.uploader().upload(multipartFile.getBytes(), ObjectUtils.emptyMap());
+				return new SuccessDataResult<>(uploadResult);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return new ErrorDataResult<>();
+			}
+		}
 }

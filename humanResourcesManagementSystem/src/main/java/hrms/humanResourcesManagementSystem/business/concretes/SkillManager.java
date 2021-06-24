@@ -49,5 +49,10 @@ public class SkillManager implements SkillService{
 		return new SuccessResult("Skill deleted");
 		
 	}
+
+	@Override
+	public DataResult<Skill> getById(int id) {
+		return new SuccessDataResult<Skill>(this.skillDao.getById(id));
+	}
 	
 }
